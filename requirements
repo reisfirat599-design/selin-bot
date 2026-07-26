@@ -1,5 +1,6 @@
 text
 
-Flask
-pyTelegramBotAPI
+flask
+pytelegrambotapi
 openai
+gunicorn
