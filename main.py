@@ -3,7 +3,7 @@ import telebot
 from flask import Flask, request
 from openai import OpenAI
 
-TOKEN = "8945385483:AAFK5FYV9cfyV-sO0vcwrjzTTUDRovJpN3A"  # BotFather'dan aldığın token'ı tırnak içine yapıştır
+TOKEN = "8945385483:AAFK5YV9cfyV-s00vcwrjzTTUDRoVjpN3A"
 OPENAI_KEY = os.getenv('OPENAI_KEY')
 
 bot = telebot.TeleBot(TOKEN)
@@ -38,16 +38,4 @@ def index():
     return "Bot aktif ve çalışıyor!"
 
 if _name_ == "_main_":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
-def webhook():
-    json_str = request.stream.read().decode('utf-8')
-    update = telebot.types.Update.de_json(json_str)
-    bot.process_new_updates([update])
-    return "!", 200
-
-@app.route('/')
-def index():
-    return "Bot aktif ve çalışıyor!"
-
-if _name_ == "_main_":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+    app.run(host="0.0.0.0", port=5000)
