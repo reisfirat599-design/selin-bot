@@ -1,5 +1,1 @@
-[23:35, 26.07.2026] Re1S: }
-[23:45, 26.07.2026] Re1S: [phases.install]
-cmds = ["python -m pip install --upgrade pip", "python -m pip install pytelegrambotapi flask openai gunicorn"]
-[start]
-cmd = "gunicorn main:app"
+
