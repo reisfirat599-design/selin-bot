@@ -1,6 +1,6 @@
 text
 
-flask
 pytelegrambotapi
+flask
 openai
 gunicorn
