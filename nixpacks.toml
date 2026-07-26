@@ -1,15 +1,4 @@
-[22:00, 26.07.2026] Re1S: [phases.setup]
-nixPkgs = ["python3"]
-
-[phases.install]
-cmds = ["pip install -r requirements.txt"]
-
-[phases.build]
-cmds = []
-
-[start]
-cmd = "python main.py"
-[22:10, 26.07.2026] Re1S: [phases.setup]
+[phases.setup]
 nixPkgs = ["python3"]
 
 [phases.install]
