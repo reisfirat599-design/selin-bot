@@ -27,7 +27,7 @@ def ai_cevap_ver(message):
     except Exception as e:
         bot.reply_to(message, "Şu an yapay zeka yanıt verirken bir hata oluştu.")
 
-@app.route(f'/{TOKEN}', methods=['POST'])
+@app.route('/' + TOKEN, methods=['POST'])
 def webhook():
     json_str = request.stream.read().decode('utf-8')
     update = telebot.types.Update.de_json(json_str)
