@@ -1,22 +1,31 @@
 import os
 import telebot
 from flask import Flask, request
+from openai import OpenAI
 
-# BotFather'dan aldığın token'ı buraya veya Railway ayarlarına ekleyeceğiz
 TOKEN = os.environ.get('BOT_TOKEN')
-bot = telebot.TeleBot(TOKEN)
+OPENAI_KEY = os.environ.get('OPENAI_API_KEY')
 
+bot = telebot.TeleBot(TOKEN)
+client = OpenAI(api_key=OPENAI_KEY)
 app = Flask(_name_)
 
-# Kullanıcı Telegram'dan bir şey yazdığında burası çalışır
 @bot.message_handler(func=lambda message: True)
-def echo_all(message):
+def ai_cevap_ver(message):
     user_text = message.text
-    chat_id = message.chat.id
     
-    # Şimdilik kullanıcının yazdığı mesaja test amaçlı yanıt veriyor
-    # Buraya ileride OpenAI (Yapay Zeka) entegrasyonunu ekleyeceğiz!
-    bot.reply_to(message, f"Mesajın alındı: {user_text}")
+    try:
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "Sen kibar, yardımsever ve Türkçe konuşan bir asistansın."},
+                {"role": "user", "content": user_text}
+            ]
+        )
+        ai_reply = response.choices[0].message.content
+        bot.reply_to(message, ai_reply)
+    except Exception as e:
+        bot.reply_to(message, "Şu an yapay zeka yanıt verirken bir hata oluştu.")
 
 @app.route(f'/{TOKEN}', methods=['POST'])
 def webhook():
@@ -27,12 +36,7 @@ def webhook():
 
 @app.route('/')
 def index():
-    Statu = "Bot aktif ve çalışıyor!"
-    return Statu
+    return "Bot aktif ve çalışıyor!"
 
 if _name_ == "_main_":
-    # Telegram webhook ayarını otomatik yapıyoruz
-    bot.remove_webhook()
-    # Railway'in vereceği adresi buraya bağlayacağız
-    # Not: railway canlıya aldığında webhook'u domain üzerinden tetikleyeceğiz
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
